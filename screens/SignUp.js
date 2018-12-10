@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
-import { Text, View, Dimensions, Alert, StyleSheet, KeyboardAvoidingView } from 'react-native'
+import { View, Alert, StyleSheet, KeyboardAvoidingView } from 'react-native'
 import firebase from 'react-native-firebase';
-import { Button, TextInput, DefaultTheme } from 'react-native-paper'
+import { Text, Button, TextInput, DefaultTheme } from 'react-native-paper'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-const { width, height } = Dimensions.get('window');
 export default class CreateTab extends Component {
 
   constructor() {
@@ -16,9 +15,6 @@ export default class CreateTab extends Component {
       email: '',
       password: '',
       errorMessage: '',
-      errorFirstName: '',
-      errorEmail: false,
-      errorPassword: false
     }
   }
 
@@ -27,7 +23,7 @@ export default class CreateTab extends Component {
     this.setState({ loading: true })
 
     if (firstName.length == 0) {
-      this.setState({ errorMessage: 'First name can not be blank.', errorFirstName: true, loading: false })
+      this.setState({ errorMessage: 'First name can not be blank.', loading: false })
       Alert.alert(
         'Error',
         'First name can not be blank.',
@@ -38,10 +34,9 @@ export default class CreateTab extends Component {
       )
       return;
     }
-    this.setState({ errorFirstName: false })
 
     if (email.length == 0) {
-      this.setState({ errorMessage: 'Email can not be blank.', errorEmail: true, loading: false })
+      this.setState({ errorMessage: 'Email can not be blank.', loading: false })
 
       Alert.alert(
         'Error',
@@ -56,7 +51,7 @@ export default class CreateTab extends Component {
 
     let reg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (reg.test(email) === false) {
-      this.setState({ errorMessage: 'Enter a valid email.', errorEmail: true, loading: false })
+      this.setState({ errorMessage: 'Enter a valid email.', loading: false })
 
       Alert.alert(
         'Error',
@@ -68,10 +63,9 @@ export default class CreateTab extends Component {
       )
       return;
     }
-    this.setState({ errorEmail: false })
 
     if (password.length == 0) {
-      this.setState({ errorMessage: 'Password can not be blank.', errorPassword: true, loading: false })
+      this.setState({ errorMessage: 'Password can not be blank.', loading: false })
 
       Alert.alert(
         'Error',
@@ -85,7 +79,7 @@ export default class CreateTab extends Component {
     }
 
     if (password.length < 6) {
-      this.setState({ errorMessage: 'Password should be more than 6 character.', errorPassword: true, loading: false })
+      this.setState({ errorMessage: 'Password should be more than 6 character.', loading: false })
 
       Alert.alert(
         'Error',
@@ -97,13 +91,10 @@ export default class CreateTab extends Component {
       )
       return;
     }
-    this.setState({ errorPassword: false })
-
 
     firebase.auth()
       .createUserWithEmailAndPassword(this.state.email, this.state.password)
       .then(() => {
-
         firebase.auth().currentUser.updateProfile({displayName: this.state.firstName + " " + this.state.lastName})
         firebase.auth().currentUser.sendEmailVerification();
         const ref = firebase.firestore().collection('Users').doc(firebase.auth().currentUser.uid);
@@ -140,6 +131,7 @@ export default class CreateTab extends Component {
   render() {
     return (
       <View style={{ flex: 1 }}>
+      <KeyboardAvoidingView style={{flex: 1}} behavior="padding" enabled>
         <View style={{ flex: 1, alignContent: 'center', justifyContent: 'center', marginLeft: 30, marginRight: 30 }}>
 
           <View style={styles.textInputContainer}>
@@ -214,6 +206,7 @@ export default class CreateTab extends Component {
             {this.state.loading ? '' : 'Sign Up'}
           </Button>
         </View>
+        </KeyboardAvoidingView>
         <Text
           style={{ fontSize: 12, alignSelf: 'center', marginBottom: 10, padding: 20 }}
           onPress={() => this.handleLogIn()}>

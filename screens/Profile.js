@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import firebase from 'react-native-firebase';
-import { Button, DefaultTheme } from 'react-native-paper'
+import { Text, Button } from 'react-native-paper'
 
 export default class App extends Component {
 

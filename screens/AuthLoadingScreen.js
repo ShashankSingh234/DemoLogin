@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
 import firebase from 'react-native-firebase';
-import {
-  ActivityIndicator,
-  StyleSheet,
-  View,
-} from 'react-native';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
 
 export default class App extends Component {
   constructor(props) {
