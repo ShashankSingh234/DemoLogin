@@ -1,8 +1,8 @@
 import { createSwitchNavigator, createStackNavigator, createAppContainer } from 'react-navigation';
-import AuthLoadingScreen from './components/AuthLoadingScreen.js'
-import LoginScreen from './components/LoginScreen.js'
-import SignUpScreen from './components/SignUp.js'
-import ProfileScreen from './components/Profile.js'
+import AuthLoadingScreen from './screens/AuthLoadingScreen.js'
+import LoginScreen from './screens/LoginScreen.js'
+import SignUpScreen from './screens/SignUp.js'
+import ProfileScreen from './screens/Profile.js'
 
 const AppStack = createStackNavigator({
   Profile: {

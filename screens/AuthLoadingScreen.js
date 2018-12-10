@@ -18,10 +18,7 @@ export default class App extends Component {
 
   _bootstrap = () => {
     user = firebase.auth().currentUser;
-    // this.unsubscriber = firebase.auth().onAuthStateChanged((user) => {
-    //   this.setState({ user });
       this.props.navigation.navigate(user ? 'App' : 'Auth');
-    // });
   };
 
   componentWillUnmount() {
